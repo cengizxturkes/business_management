@@ -3,6 +3,11 @@ import '../../../../core/network/graphql_config.dart';
 import '../models/branch_model.dart';
 
 class BranchRepository {
+  static final GraphQLClient _publicClient = GraphQLClient(
+    link: GraphQLConfig.httpLink,
+    cache: GraphQLCache(),
+  );
+
   static Future<List<BranchModel>> getBranches() async {
     try {
       final QueryOptions options = QueryOptions(
@@ -12,15 +17,19 @@ class BranchRepository {
               id
               branchName
               branchType
-              email
-              phoneNumber
               active
+              phoneNumber
+              email
+              defaultCurrencyId
+              defaultPriceListId
+              createdAt
+              updatedAt
             }
           }
         '''),
       );
 
-      final QueryResult result = await GraphQLConfig.client.query(options);
+      final QueryResult result = await _publicClient.query(options);
 
       if (result.hasException) {
         throw Exception(result.exception?.graphqlErrors.first.message ??

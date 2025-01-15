@@ -3,8 +3,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import '../services/auth_service.dart';
 
 class GraphQLConfig {
-  static final HttpLink httpLink = HttpLink(
-      'https://business-management-backend-production.up.railway.app/graphql');
+  static final HttpLink httpLink = HttpLink('http://localhost:4000/graphql');
 
   static final AuthLink authLink = AuthLink(
     getToken: () async {
