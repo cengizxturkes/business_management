@@ -28,6 +28,7 @@ class LoginCubit extends Cubit<LoginState> {
                 firstName
                 lastName
                 role
+                branchId
               }
             }
           }

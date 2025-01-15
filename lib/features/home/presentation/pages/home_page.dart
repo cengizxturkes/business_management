@@ -57,30 +57,38 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _subscribeToThemeChanges() {
-    if (widget.user.branchId.isEmpty) return;
+    debugPrint('User bilgileri: ${widget.user.toString()}');
+    debugPrint('Branch ID: ${widget.user.branchId}');
 
+    if (widget.user.branchId.isEmpty) {
+      debugPrint('Branch ID boş, subscription başlatılamıyor');
+      return;
+    }
+
+    debugPrint('Tema subscription\'ı başlatılıyor...');
     _themeSubscription =
         ThemeRepository.subscribeToThemeChanges(widget.user.branchId).listen(
       (theme) async {
         debugPrint('Yeni tema alındı: ${theme.toString()}');
         try {
           await ThemeService.saveTheme(theme);
+          debugPrint('Tema kaydedildi');
+
           if (mounted) {
             setState(() {
               _currentTheme = theme;
+              debugPrint('Tema state güncellendi: ${_currentTheme.toString()}');
             });
-            if (context.mounted) {
-              Future.microtask(() {
-                setState(() {});
-              });
-            }
           }
         } catch (e) {
-          debugPrint('Tema kaydetme hatası: $e');
+          debugPrint('Tema işleme hatası: $e');
         }
       },
       onError: (error) {
         debugPrint('Tema subscription hatası: $error');
+      },
+      onDone: () {
+        debugPrint('Tema subscription sonlandı');
       },
     );
   }

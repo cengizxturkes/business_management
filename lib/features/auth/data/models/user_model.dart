@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 
 class UserModel extends Equatable {
   final String id;
@@ -13,11 +14,12 @@ class UserModel extends Equatable {
     required this.email,
     required this.firstName,
     required this.lastName,
-    required this.role,
+    this.role = '',
     required this.branchId,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
+    debugPrint('UserModel.fromJson çağrıldı. JSON: $json');
     return UserModel(
       id: json['id'] ?? '',
       email: json['email'] ?? '',
@@ -41,4 +43,9 @@ class UserModel extends Equatable {
 
   @override
   List<Object?> get props => [id, email, firstName, lastName, role, branchId];
+
+  @override
+  String toString() {
+    return 'UserModel(id: $id, email: $email, firstName: $firstName, lastName: $lastName, role: $role, branchId: $branchId)';
+  }
 }

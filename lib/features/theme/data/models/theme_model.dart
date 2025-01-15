@@ -2,14 +2,14 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 class ThemeModel {
-  final String branchId;
+  final String? branchId;
   final String backgroundColor;
   final String textColor;
   final String primaryColor;
   final String secondaryColor;
 
   ThemeModel({
-    required this.branchId,
+    this.branchId,
     required this.backgroundColor,
     required this.textColor,
     required this.primaryColor,
@@ -18,7 +18,7 @@ class ThemeModel {
 
   factory ThemeModel.fromJson(Map<String, dynamic> json) {
     return ThemeModel(
-      branchId: json['branchId'] as String,
+      branchId: json['branchId'],
       backgroundColor: json['backgroundColor'] as String,
       textColor: json['textColor'] as String,
       primaryColor: json['primaryColor'] as String,
